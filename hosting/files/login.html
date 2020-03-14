@@ -20,6 +20,7 @@
       console.log("So far so good...");
 
       client.auth.logout().then(function() {
+        forcedebugger
  
         localStorage.setItem('redirectUrl', document.referrer);
 
