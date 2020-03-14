@@ -59,7 +59,7 @@
 
     <script>
       debugger;
-      const providerName = client.auth.authInfo.isLoggedInProviderName;
+      const providerName = client.auth.authInfo.loggedInProviderName;
       console.log(providerName);
       if (client.auth.authInfo.loggedInProviderName === "oauth2-google"){
         document.write("Hola! " + client.auth.authInfo.userProfile.data.first_name);
