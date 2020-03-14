@@ -8,6 +8,7 @@
         if (client.auth.hasRedirectResult()){
           client.auth.handleRedirectResult().then(user => {
             let redirectUrl = localStorage.getItem('redirectUrl');
+            console.log("redirectUrl- " + redirectUrl);
 
             if (!redirectUrl) {
               redirectUrl = "index.html";
@@ -16,7 +17,7 @@
           });
         }
       
-      console.log("So far so good..." + redirectUrl);
+      console.log("So far so good...");
 
       client.auth.logout().then(function() {
  
