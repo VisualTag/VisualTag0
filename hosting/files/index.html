@@ -33,7 +33,7 @@
 			.toArray()
 			.then(docs => {
 				const html = docs.map(doc => doc.VehicleId).join("<br>");
-				document.getElementById("logdetails").innerHTML = html;
+				document.getElementById("placas").innerHTML = html;
 			})
 	  }		
 	</script>
@@ -81,8 +81,11 @@
       //console.log(providerName);
       if (client.auth.authInfo.loggedInProviderName === "oauth2-google"){
         document.write("Hola! " + client.auth.authInfo.userProfile.data.name);
+
       } else {
         document.write("<a href='login.html'>Registrate con tu cuenta de Google</a>");
+        var x = document.getElementById("placas");
+        x.style.display = "none";
       }
 
     </script>
@@ -93,7 +96,7 @@
       <h2>Portal de usuario</h2>
     
       <div class="footer">
-        <div id = "logdetails"></div>
+        <div id = "placas"></div>
         <p>
         Ultimas placas registradas
         </p>
