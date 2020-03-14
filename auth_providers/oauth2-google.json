@@ -15,7 +15,7 @@
         }
     ],
     "redirect_uris": [
-        "https://visualtag0-irzgq.mongodbstitch.com/log.html",
+        //"https://visualtag0-irzgq.mongodbstitch.com/log.html",
         "https://visualtag0-irzgq.mongodbstitch.com/login.html"
     ]
 }
