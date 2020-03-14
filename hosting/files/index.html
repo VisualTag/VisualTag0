@@ -81,11 +81,12 @@
       //console.log(providerName);
       if (client.auth.authInfo.loggedInProviderName === "oauth2-google"){
         document.write("Hola! " + client.auth.authInfo.userProfile.data.name);
+        var x = document.getElementById("placas");
+        x.style.display = "block";
+
 
       } else {
         document.write("<a href='login.html'>Registrate con tu cuenta de Google</a>");
-        var x = document.getElementById("placas");
-        x.style.display = "none";
       }
 
     </script>
