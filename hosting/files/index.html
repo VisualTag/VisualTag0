@@ -7,7 +7,24 @@
 	  const client = stitch.Stitch.initializeDefaultAppClient('visualtag0-irzgq');
 
 	  const db = client.getServiceClient(stitch.RemoteMongoClient.factory, 'mongodb-atlas').db('VisualTagModel');
-
+	  login().then(() =>
+		db.collection('Log').find({}, { limit: 100}).asArray()
+	  ).then(docs => {
+		  console.log("Found docs", docs)
+		  console.log("[MongoDB Stitch] Connected to Stitch")
+	  }).catch(err => {
+		console.error(err)
+    }).then(displayLog);
+    
+    function login(){
+      if (client.auth.isLoggedIn){
+        console.log("already logged in");
+        return Promise.resolve();
+      } else  {
+        console.log("logging in anonymously");
+        return client.auth.loginWithCredential(new stitch.AnonymousCredential());
+      }
+    }
 	  
 	  function displayLog(){
 		db.collection("Log")
@@ -58,9 +75,9 @@
   <body>
 
     <script>
-      debugger;
-      const providerName = client.auth.authInfo.loggedInProviderName;
-      console.log(providerName);
+      //debugger;
+      //const providerName = client.auth.authInfo.loggedInProviderName;
+      //console.log(providerName);
       if (client.auth.authInfo.loggedInProviderName === "oauth2-google"){
         document.write("Hola! " + client.auth.authInfo.userProfile.data.name);
       } else {
