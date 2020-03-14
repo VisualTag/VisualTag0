@@ -1,0 +1,107 @@
+
+<!-- saved from url=(0086)https://stitch-statichosting-prod.s3.amazonaws.com/5e65334d517c2313783afd6d/index.html -->
+<html>
+	<head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.6.0/stitch.js"></script>
+	<script>
+	  const client = stitch.Stitch.initializeDefaultAppClient('visualtag0-irzgq');
+
+	  const db = client.getServiceClient(stitch.RemoteMongoClient.factory, 'mongodb-atlas').db('VisualTagModel');
+
+	  login().then(() =>
+		db.collection('Log').find({}, { limit: 100}).asArray()
+	  ).then(docs => {
+		  console.log("Found docs", docs)
+		  console.log("[MongoDB Stitch] Connected to Stitch")
+	  }).catch(err => {
+		console.error(err)
+    }).then(displayLog);
+    
+    function login(){
+      if (client.auth.isLoggedIn){
+        console.log("already logged in");
+        return Promise.resolve();
+      } else  {
+        console.log("logging in anonymously");
+        return client.auth.loginWithCredential(new stitch.AnonymousCredential());
+      }
+    }
+	  
+	  function displayLog(){
+		db.collection("Log")
+			.find({})
+			.toArray()
+			.then(docs => {
+				const html = docs.map(doc => doc.VehicleId).join("<br>");
+				document.getElementById("logdetails").innerHTML = html;
+			})
+	  }		
+	</script>
+
+	<style>
+      body {
+        background-color: #F5F6F7;
+        color: #494747;
+        font-family: Helvetica, sans-serif;
+      }
+      a {
+        color: #006CBC;
+      }
+      h1 {
+        font-size: 60pt;
+        font-weight: 200;
+        text-align:center;
+      }
+      h2 {
+        font-size: 24pt;
+        font-weight: 400;
+        text-align:center;
+      }
+      .content{
+        padding-top:40px;
+      }
+
+      .footer {
+        font-size: 14pt;
+        font-weight: 200;
+        text-align:center;
+      }
+
+	  .logo {
+		margin-top: 20px;
+	  }
+
+    </style>
+  </head>
+  <body>
+
+    <script>
+      debugger;
+      if (client.auth.authInfo.isLoggedInProviderName === "oauth2-google"){
+        document.write("Hola " + client.auth.authInfo.userProfile.data.first_name);
+      } else {
+        document.write("<a href='login.html'>Registrate con tu cuenta de Google</a>");
+      }
+
+    </script>
+      
+
+    <div class="content">
+      <h1>VisualTag</h1>
+      <h2>Portal de usuario</h2>
+    
+      <div class="footer">
+        <div id = "logdetails"></div>
+        <p>
+        Ultimas placas registradas
+        </p>
+
+        <p>
+        Copyright / Derechos de autor VisualTag 2020
+        </p>
+        <img class="logo" height="27px" width="147px" src="https://stitch-statichosting-prod.s3.amazonaws.com/5e65334d517c2313783afd6d/Assets/Site/Images/VisualTagLogo-medium.png">
+      </div>
+    </div>
+  
+
+</body></html>

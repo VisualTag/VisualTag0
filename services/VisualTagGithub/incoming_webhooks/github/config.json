@@ -1,0 +1,10 @@
+{
+    "name": "github",
+    "run_as_authed_user": false,
+    "run_as_user_id": "",
+    "run_as_user_id_script_source": "",
+    "options": {
+        "secret": "Joluge@1234567890"
+    },
+    "respond_result": true
+}

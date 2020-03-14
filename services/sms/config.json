@@ -1,0 +1,11 @@
+{
+    "name": "sms",
+    "type": "twilio",
+    "config": {
+        "sid": "AC989d2083990928baa9245ea317c57833"
+    },
+    "secret_config": {
+        "auth_token": "jolugefloflo"
+    },
+    "version": 1
+}

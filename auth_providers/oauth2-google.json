@@ -1,0 +1,21 @@
+{
+    "name": "oauth2-google",
+    "type": "oauth2-google",
+    "config": {
+        "clientId": "521040178878-278l932ajppvn925168nikh442panj5p.apps.googleusercontent.com"
+    },
+    "secret_config": {
+        "clientSecret": "secureGoogleOauth"
+    },
+    "disabled": false,
+    "metadata_fields": [
+        {
+            "required": false,
+            "name": "name"
+        }
+    ],
+    "redirect_uris": [
+        "https://visualtag0-irzgq.mongodbstitch.com/log.html",
+        "https://visualtag0-irzgq.mongodbstitch.com/login.html"
+    ]
+}
