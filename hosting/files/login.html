@@ -20,10 +20,8 @@
       console.log("So far so good...");
 
       client.auth.logout().then(function() {
-        console.log(redirectUrl);
-        forcedebugger
  
-        localStorage.setItem('redirectUrl', document.referrer);
+        localStorage.setItem('index.html', document.referrer);
 
         let credential = new stitch.GoogleRedirectCredential();
         client.auth.loginWithRedirect(credential);
