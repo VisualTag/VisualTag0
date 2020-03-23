@@ -32,7 +32,7 @@
 			.find({})
 			.toArray()
 			.then(docs => {
-				const html = docs.map(doc => doc.VehicleId).join("<br>");
+				const html = docs.map(doc => doc.VehicleImageStr).join("<br>");
 				document.getElementById("placas").innerHTML = html;
 			})
 	  }		
