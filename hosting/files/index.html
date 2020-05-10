@@ -1,9 +1,17 @@
 
 <!-- saved from url=(0086)https://stitch-statichosting-prod.s3.amazonaws.com/5e65334d517c2313783afd6d/index.html -->
-<html>
-  <head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<html translate="no">
+
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta name="google" content="notranslate">
   <script src="/node_modules/angular/angularjs.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.6.0/stitch.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://getbootstrap.com/docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700|Quicksand:300,400,500" rel="stylesheet">
 	<script>
 	  const client = stitch.Stitch.initializeDefaultAppClient('visualtag0-irzgq');
 
@@ -13,10 +21,54 @@
 	  ).then(docs => {
 		  console.log("Found docs", docs)
 		  console.log("[MongoDB Stitch] Connected to Stitch")
+
+
+      let tablearea = document.getElementById('tables'),
+      table = document.createElement('tbody');
+
+      for (let i = 0; i < docs.length; i++) {
+        let tr = document.createElement('tr');
+
+        tr.appendChild( document.createElement('td') );
+        tr.appendChild( document.createElement('td') );
+        tr.appendChild( document.createElement('td') );
+        tr.appendChild( document.createElement('td') );
+
+        let btn = document.createElement("button");
+        btn.setAttribute("class","btn btn-success btn-sm mt-0 mr-1");
+        btn.innerHTML = '<i class="fa fa-eye pr-2" aria-hidden="true"></i>View Details';
+        btn.onclick = function(){
+          document.getElementById("logId").innerHTML = docs[i]._id;
+          document.getElementById("date").innerHTML = docs[i].DateTime;
+          document.getElementById("vehicleId").innerHTML = docs[i].VehicleId;
+          document.getElementById("driver").innerHTML = docs[i].DriverName;
+          document.getElementById("relatedTo").innerHTML = docs[i].RelatedTo;
+          document.getElementById("confirmedBy").innerHTML = docs[i].ConfirmedBy;
+          document.getElementById("security").innerHTML = docs[i].SecurityAgent;
+          $("#viewModal").modal();
+        }
+
+        let btnDel = document.createElement("button");
+        btnDel.setAttribute("class","btn btn-danger btn-sm mt-0 mr-1");
+        btnDel.innerHTML = '<i class="fa fa-trash pr-2" aria-hidden="true"></i>Delete';
+        btnDel.onclick = function(){
+          $("#delModal").modal();
+        }
+
+        tr.cells[0].appendChild( document.createTextNode(docs[i]._id) )
+        tr.cells[1].appendChild( document.createTextNode(docs[i].RelatedTo) )
+        tr.cells[2].appendChild( document.createTextNode(docs[i].DateTime) )
+        tr.cells[3].appendChild( btn );
+        tr.cells[3].appendChild( btnDel );
+
+        table.appendChild(tr);
+      }
+      tablearea.appendChild(table);
+
 	  }).catch(err => {
 		console.error(err)
     }).then(displayPlacas);
-    
+
     function login(){
       if (client.auth.isLoggedIn){
         console.log("already logged in");
@@ -26,7 +78,7 @@
         return client.auth.loginWithCredential(new stitch.AnonymousCredential());
       }
     }
-	  
+
 	  function displayPlacas(){
 		db.collection("Log")
 			.find({})
@@ -35,12 +87,11 @@
 				const html = docs.map(doc => doc.VehicleImageStr).join("<br>");
 				document.getElementById("placas").innerHTML = html;
 			})
-	  }		
+	  }
 	</script>
 
 	<style>
       body {
-        background-color: #F5F6F7;
         color: #494747;
         font-family: Helvetica, sans-serif;
       }
@@ -57,19 +108,19 @@
         font-weight: 400;
         text-align:center;
       }
-      .content{
-        padding-top:40px;
-      }
 
       .footer {
         font-size: 14pt;
         font-weight: 200;
         text-align:center;
+        background-color: #D1D599
       }
-
-	  .logo {
-		margin-top: 20px;
-	  }
+      .header {
+        background-color: #323334
+      }
+      .tblClass {
+        background-color: #CCD276
+      }
 
     </style>
   </head>
@@ -79,37 +130,143 @@
       //debugger;
       //const providerName = client.auth.authInfo.loggedInProviderName;
       //console.log(providerName);
+      window.onload = function() {
       if (client.auth.authInfo.loggedInProviderName === "oauth2-google"){
         document.write("Hola! " + client.auth.authInfo.userProfile.data.name);
         var x = document.getElementById("placas");
         x.style.display = "block";
 
       } else {
-        document.write("<a href='login.html'>Registrate con tu cuenta de Google</a>");
+        document.getElementById('authLogin').innerHTML = "<a class='text-white' href='login.html'>Registrate con tu cuenta de Google</a>";
+        // document.write("<a href='login.html'>Registrate con tu cuenta de Google</a>");
         var x = document.getElementById("placas");
         x.style.display = "none";
 
       }
+      };
 
     </script>
-      
 
-    <div class="content">
-      <h1>VisualTag</h1>
-      <h2>Portal de usuario</h2>
-    
-      <div class="footer">
-        <div id = "placas"></div>
-        <p>
-        Ultimas placas registradas
-        </p>
+    <!-- Modal View Details -->
+  <div class="modal" id="viewModal" role="dialog">
+    <div class="modal-dialog">
 
-        <p>
-        Copyright / Derechos de autor VisualTag 2020
-        </p>
-        <img class="logo" height="129px" width="600px" src="https://stitch-statichosting-prod.s3.amazonaws.com/5e65334d517c2313783afd6d/Assets/Site/Images/VisualTagLogo-medium.png">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Log Details</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12 ">
+            <div class="row form-group">
+
+              <div class="col-md-6"> <span class="field"> Id </span> </div>
+              <div class="col-md-6"> <span class="field" id="logId"> hjh </span> </div>
+
+              <div class="col-md-6"> <span class="field"> Date </span> </div>
+              <div class="col-md-6"> <span class="field" id="date"> hjh </span> </div>
+
+              <div class="col-md-6"> <span class="field"> Vehicle Id </span> </div>
+              <div class="col-md-6"> <span class="field" id="vehicleId"> hjh </span> </div>
+
+              <div class="col-md-6"> <span class="field"> Driver Name </span> </div>
+              <div class="col-md-6"> <span class="field" id="driver"> hjh </span> </div>
+
+              <div class="col-md-6"> <span class="field"> Related To </span> </div>
+              <div class="col-md-6"> <span class="field" id="relatedTo"> hjh </span> </div>
+
+              <div class="col-md-6"> <span class="field"> Confirmed By </span> </div>
+              <div class="col-md-6"> <span class="field" id="confirmedBy"> hjh </span> </div>
+
+              <div class="col-md-6"> <span class="field"> Security Agent </span> </div>
+              <div class="col-md-6"> <span class="field" id="security"> hjh </span> </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
       </div>
-    </div>
-  
 
-</body></html>
+    </div>
+  </div>
+
+    <!-- Modal Delete Details -->
+  <div class="modal" id="delModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Warning !!</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>This action can't be performed. </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+<div class="content">
+  <div class="container-fluid h-100">
+    <div class="row">
+      <main role="main" class="col-md-12 pr-0 pl-0">
+        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm text-white header">
+          <h5 class="my-0 mr-md-auto masthead-brand"><b>VisualTag</b> <br /> Portal de usuario</h5>
+          <nav class="my-2 my-md-0 mr-md-3 ">
+            <div class="p-2 text-white" id="authLogin"></div>
+          </nav>
+        </div>
+
+        <div class="table-responsive table pl-2 pr-2">
+          <table class="table table-striped table-sm" id="tables">
+            <thead class="tblClass">
+              <tr>
+                <th>Id</th>
+                <th>Related To</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <!-- <tbody id="tables">
+              <tr>
+                <td>w434354o504o54o88789890998988008</td>
+                <td>Casa 56</td>
+                <td>3/11/2020 6:45:54 PM</td>
+                <td>
+                  <button class="btn btn-success btn-sm mt-0 mr-1"><i class="fa fa-eye pr-2" aria-hidden="true"></i>View Details</button>
+                  <button class="btn btn-danger btn-sm mt-0 mr-1"><i class="fa fa-trash pr-2" aria-hidden="true"></i>Delete</button>
+                </td>
+              </tr>
+            </tbody> -->
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="footer fixed-bottom">
+    <footer class="mastfoot mt-auto">
+      <div class="inner text-dark">
+        <p class="pt-2">
+          <img class="logo" height="30px" width="130px" src="https://stitch-statichosting-prod.s3.amazonaws.com/5e65334d517c2313783afd6d/Assets/Site/Images/VisualTagLogo-medium.png">
+          Ultimas placas registradas
+        </p>
+        <p>
+          Copyright / Derechos de autor VisualTag 2020
+        </p>
+      </div>
+    </footer>
+  </div>
+
+</div>
+</body>
+</html>
