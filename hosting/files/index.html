@@ -44,10 +44,13 @@
             tr.appendChild(document.createElement("td"));
             tr.appendChild(document.createElement("td"));
 
-            let btn = document.createElement("button");
-            btn.setAttribute("class", "btn btn-success btn-sm mt-0 mr-1");
+            let btnView = document.createElement("button");
+            btn.setAttribute(
+              "class",
+              "btn btn-outline-success btn-sm mt-0 mr-1"
+            );
             btn.innerHTML =
-              '<i class="fa fa-eye pr-2" aria-hidden="true"></i>View Details';
+              '<i class="fa fa-eye pr-2" aria-hidden="true"></i>Detalles';
             btn.onclick = function () {
               document.getElementById("logId").innerHTML = docs[i]._id;
               document.getElementById("date").innerHTML = docs[i].DateTime;
@@ -64,7 +67,10 @@
             };
 
             let btnDel = document.createElement("button");
-            btnDel.setAttribute("class", "btn btn-danger btn-sm mt-0 mr-1");
+            btnDel.setAttribute(
+              "class",
+              "btn btn-outline-danger btn-sm mt-0 mr-1"
+            );
             btnDel.innerHTML =
               '<i class="fa fa-trash pr-2" aria-hidden="true"></i>Delete';
             btnDel.onclick = function () {
@@ -74,7 +80,7 @@
             tr.cells[0].appendChild(document.createTextNode(docs[i]._id));
             tr.cells[1].appendChild(document.createTextNode(docs[i].RelatedTo));
             tr.cells[2].appendChild(document.createTextNode(docs[i].DateTime));
-            tr.cells[3].appendChild(btn);
+            tr.cells[3].appendChild(btnView);
             tr.cells[3].appendChild(btnDel);
 
             table.appendChild(tr);
