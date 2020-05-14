@@ -50,7 +50,7 @@
               "btnView btn-outline-success btn-sm mt-0 mr-1"
             );
             btnView.innerHTML =
-              '<i class="fa fa-eye pr-2" aria-hidden="true"></i>Detalles';
+              '<i class="fa fa-eye pr-2" aria-hidden="true"></i>...';
             btnView.onclick = function () {
               document.getElementById("logId").innerHTML = docs[i]._id;
               document.getElementById("date").innerHTML = docs[i].DateTime;
@@ -72,7 +72,7 @@
               "btn btn-outline-danger btn-sm mt-0 mr-1"
             );
             btnDel.innerHTML =
-              '<i class="fa fa-trash pr-2" aria-hidden="true"></i>Delete';
+              '<i class="fa fa-trash pr-2" aria-hidden="true"></i>!';
             btnDel.onclick = function () {
               $("#delModal").modal();
             };
@@ -321,10 +321,10 @@
                 width="118px"
                 src="https://stitch-statichosting-prod.s3.amazonaws.com/5e65334d517c2313783afd6d/Assets/Site/Images/VisualTagLogo.svg"
               />
-              -----
+              <h5>Identificación Visual de Personas y Vehículos</h5> 
             </p>
             <p>
-              Copyright / Derechos de autor VisualTag 2020
+              <h6>Copyright / Derechos de autor VisualTag 2020</h6>
             </p>
           </div>
         </footer>
