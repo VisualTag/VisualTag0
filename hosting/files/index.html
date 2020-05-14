@@ -102,7 +102,7 @@
         .catch((err) => {
           console.error(err);
         })
-        .then(displayPlacas);
+        .then(login);
 
       function login() {
         if (client.auth.isLoggedIn) {
@@ -116,15 +116,6 @@
         }
       }
 
-      function displayPlacas() {
-        db.collection("Log")
-          .find({})
-          .toArray()
-          .then((docs) => {
-            const html = docs.map((doc) => doc.VehicleImageStr).join("<br>");
-            document.getElementById("placas").innerHTML = html;
-          });
-      }
     </script>
 
     <style>
@@ -169,14 +160,10 @@
       window.onload = function () {
         if (client.auth.authInfo.loggedInProviderName === "oauth2-google") {
           document.write("Hola! " + client.auth.authInfo.userProfile.data.name);
-          var x = document.getElementById("placas");
-          x.style.display = "block";
         } else {
           document.getElementById("authLogin").innerHTML =
             "<a class='text-white' href='login.html'>Registrate con tu cuenta de Google</a>";
           // document.write("<a href='login.html'>Registrate con tu cuenta de Google</a>");
-          var x = document.getElementById("placas");
-          x.style.display = "none";
         }
       };
     </script>
