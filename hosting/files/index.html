@@ -29,6 +29,10 @@
         .db("VisualTagModel");
       login()
         .then(() => db.collection("Log").find({}, { limit: 100 }).asArray())
+        .then((docs2) => {
+          console.log("Found docs", docs2);
+          console.log("[MongoDB Stitch] Connected to Stitch")
+        .then(() => db.collection("Vehicle").find({}, { limit: 100 }).asArray())
         .then((docs) => {
           console.log("Found docs", docs);
           console.log("[MongoDB Stitch] Connected to Stitch");
@@ -52,11 +56,20 @@
             btnView.innerHTML =
               '<i class="fa fa-eye pr-2" aria-hidden="true"></i>...';
             btnView.onclick = function () {
-              document.getElementById("logId").innerHTML = docs[i]._id;
-              document.getElementById("date").innerHTML = docs[i].DateTime;
+              document.getElementById("logId").innerHTML = 
+                docs[i]._id;
+              document.getElementById("date").innerHTML = 
+                docs[i].DateTime;
+              document.getElementById("vehicleId").innerHTML =
+                docs[i].VehicleId;              
+              document.getElementById("vehicleId").innerHTML =
+                docs[i].VehicleId;              
+              document.getElementById("vehicleId").innerHTML =
+                docs[i].VehicleId;              
               document.getElementById("vehicleId").innerHTML =
                 docs[i].VehicleId;
-              document.getElementById("driver").innerHTML = docs[i].DriverName;
+              document.getElementById("driver").innerHTML = 
+                docs[i].DriverName;
               document.getElementById("relatedTo").innerHTML =
                 docs[i].RelatedTo;
               document.getElementById("confirmedBy").innerHTML =
@@ -65,7 +78,6 @@
                 docs[i].SecurityAgent;
               $("#viewModal").modal();
             };
-
             let btnDel = document.createElement("button");
             btnDel.setAttribute(
               "class",
