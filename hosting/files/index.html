@@ -38,7 +38,6 @@
 
           for (let i = 0; i < docs.length; i++) {
             let tr = document.createElement("tr");
-
             tr.appendChild(document.createElement("td"));
             tr.appendChild(document.createElement("td"));
             tr.appendChild(document.createElement("td"));
@@ -56,6 +55,8 @@
               document.getElementById("date").innerHTML = docs[i].DateTime;
               document.getElementById("vehicleId").innerHTML =
                 docs[i].VehicleId;
+              document.getElementById("vehicleImageStr").innerHTML =
+                docs[i].VehicleImageStr;
               document.getElementById("driver").innerHTML = docs[i].DriverName;
               document.getElementById("relatedTo").innerHTML =
                 docs[i].RelatedTo;
@@ -105,13 +106,7 @@
       }
 
       function displayPlacas() {
-        db.collection("Log")
-          .find({})
-          .toArray()
-          .then((docs) => {
-            const html = docs.map((doc) => doc.VehicleImageStr).join("<br>");
-            document.getElementById("placas").innerHTML = html;
-          });
+        console.log("so far so good...");
       }
     </script>
 
@@ -229,6 +224,10 @@
                 </div>
               </div>
             </div>
+          </div>
+          <script>var imgsrc = document.getElementById("vehicleImageStr");</script>
+          <div>
+            <img src="data:image/png;base64, "+ imgsrc alt="actual image" />
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">
