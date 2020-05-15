@@ -52,20 +52,11 @@
             btnView.innerHTML =
               '<i class="fa fa-eye pr-2" aria-hidden="true"></i>...';
             btnView.onclick = function () {
-              document.getElementById("logId").innerHTML = 
-                docs[i]._id;
-              document.getElementById("date").innerHTML = 
-                docs[i].DateTime;
-              document.getElementById("vehicleId").innerHTML =
-                docs[i].VehicleId;              
-              document.getElementById("vehicleId").innerHTML =
-                docs[i].VehicleId;              
-              document.getElementById("vehicleId").innerHTML =
-                docs[i].VehicleId;              
+              document.getElementById("logId").innerHTML = docs[i]._id;
+              document.getElementById("date").innerHTML = docs[i].DateTime;
               document.getElementById("vehicleId").innerHTML =
                 docs[i].VehicleId;
-              document.getElementById("driver").innerHTML = 
-                docs[i].DriverName;
+              document.getElementById("driver").innerHTML = docs[i].DriverName;
               document.getElementById("relatedTo").innerHTML =
                 docs[i].RelatedTo;
               document.getElementById("confirmedBy").innerHTML =
@@ -74,6 +65,7 @@
                 docs[i].SecurityAgent;
               $("#viewModal").modal();
             };
+
             let btnDel = document.createElement("button");
             btnDel.setAttribute(
               "class",
@@ -297,7 +289,7 @@
                     <th>Folio de ingreso</th>
                     <th>Destino o asunto</th>
                     <th>Fecha</th>
-                    <th>Detalles | Acciones</th>
+                    <th>Mas</th>
                   </tr>
                 </thead>
                 <!-- <tbody id="tables">
